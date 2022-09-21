@@ -49,8 +49,6 @@ public class EasyOpenCVExample extends LinearOpMode
         waitForStart();
 
         while (opModeIsActive()){
-            telemetry.addData("Running Time", phoneCam.getTotalFrameTimeMs());
-            telemetry.addData("Dominant Color", pipeline.get_dom_color());
             telemetry.update();
             sleep(500);
         }
