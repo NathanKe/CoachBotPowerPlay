@@ -3,11 +3,7 @@ package org.firstinspires.ftc.teamcode.ancillary_subsystems;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.core.Point;
-import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
-import org.opencv.core.Size;
-import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 import java.util.Arrays;
@@ -28,10 +24,10 @@ public class TestImagePipeline extends OpenCvPipeline {
 
     @Override
     public Mat processFrame(Mat input){
-        Core.extractChannel(input, raw_blue_channel, 0);
+        Core.extractChannel(input, raw_blue_channel, 2);
         Core.inRange(raw_blue_channel, new Scalar(100), new Scalar(255), threshold_blue_channel);
 
-        Core.merge(Arrays.asList(threshold_blue_channel, zero, zero), blueified);
+        Core.merge(Arrays.asList(zero, zero, threshold_blue_channel), blueified);
         return blueified;
     }
 }
