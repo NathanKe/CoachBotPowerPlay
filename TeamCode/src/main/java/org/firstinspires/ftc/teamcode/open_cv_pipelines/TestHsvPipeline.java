@@ -1,15 +1,12 @@
-package org.firstinspires.ftc.teamcode.ancillary_subsystems;
+package org.firstinspires.ftc.teamcode.open_cv_pipelines;
 
-import com.acmerobotics.dashboard.config.Config;
 
 import org.opencv.core.Core;
-import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-@Config
 public class TestHsvPipeline extends OpenCvPipeline {
 
     public static double LOW_H = 100;
@@ -19,8 +16,8 @@ public class TestHsvPipeline extends OpenCvPipeline {
     public static double LOW_V = 50;
     public static double HIGH_V = 255;
 
-    Scalar low = new Scalar(LOW_H, LOW_S, LOW_V);
-    Scalar high = new Scalar(HIGH_H, HIGH_S, HIGH_V);
+    public Scalar low = new Scalar(LOW_H, LOW_S, LOW_V);
+    public Scalar high = new Scalar(HIGH_H, HIGH_S, HIGH_V);
 
 
     Mat hsv = new Mat();
