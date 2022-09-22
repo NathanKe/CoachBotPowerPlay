@@ -12,31 +12,33 @@ import org.openftc.easyopencv.OpenCvPipeline;
 @Config
 public class TestHsvPipeline extends OpenCvPipeline {
 
-    public static double LOW_H = 0;
-    public static double HIGH_H = 180;
-    public static double LOW_S = 0;
+    public static double LOW_H = 100;
+    public static double HIGH_H = 130;
+    public static double LOW_S = 50;
     public static double HIGH_S = 255;
-    public static double LOW_V = 0;
+    public static double LOW_V = 50;
     public static double HIGH_V = 255;
 
     Scalar low = new Scalar(LOW_H, LOW_S, LOW_V);
     Scalar high = new Scalar(HIGH_H, HIGH_S, HIGH_V);
 
 
-    Mat zero = new Mat();
     Mat hsv = new Mat();
+    Mat mask = new Mat();
     Mat output = new Mat();
 
     @Override
     public void init(Mat firstFrame){
-        zero = new Mat(firstFrame.size(), CvType.CV_8UC1, new Scalar(0));
     }
 
     @Override
     public Mat processFrame(Mat input){
         Imgproc.cvtColor(input, hsv, Imgproc.COLOR_RGB2HSV);
 
-        Core.inRange(hsv, low, high, output);
+        output.release();
+        Core.inRange(hsv, low, high, mask);
+
+        Core.bitwise_and(input, input, output, mask);
 
         return output;
     }
