@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.open_cv_pipelines.TestHsvPipeline;
+import org.firstinspires.ftc.teamcode.open_cv_pipelines.TestYCrCbPipeline;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -16,7 +17,7 @@ import org.openftc.easyopencv.OpenCvInternalCamera2;
 public class EasyOpenCVExample extends LinearOpMode
 {
     OpenCvCamera phoneCam;
-    TestHsvPipeline pipeline;
+    TestYCrCbPipeline pipeline;
 
     @Override
     public void runOpMode()
@@ -24,7 +25,7 @@ public class EasyOpenCVExample extends LinearOpMode
         FtcDashboard dash = FtcDashboard.getInstance();
         telemetry = new MultipleTelemetry(telemetry, dash.getTelemetry());
 
-        pipeline = new TestHsvPipeline();
+        pipeline = new TestYCrCbPipeline();
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera2(OpenCvInternalCamera2.CameraDirection.BACK, cameraMonitorViewId);
