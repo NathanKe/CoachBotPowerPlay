@@ -7,10 +7,11 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-public class TestHsvPipeline extends OpenCvPipeline {
+public class TestYCbCrPipeline extends OpenCvPipeline {
 
     public Scalar low = new Scalar(0, 0, 0);
     public Scalar high = new Scalar(255, 255, 255);
+
 
     Mat hsv = new Mat();
     Mat mask = new Mat();
@@ -22,7 +23,7 @@ public class TestHsvPipeline extends OpenCvPipeline {
 
     @Override
     public Mat processFrame(Mat input){
-        Imgproc.cvtColor(input, hsv, Imgproc.COLOR_RGB2HSV);
+        Imgproc.cvtColor(input, hsv, Imgproc.COLOR_RGB2YCrCb);
 
         output.release();
         Core.inRange(hsv, low, high, mask);
