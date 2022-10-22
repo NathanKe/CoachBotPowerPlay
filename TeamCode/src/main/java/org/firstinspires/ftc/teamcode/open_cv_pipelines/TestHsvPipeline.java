@@ -9,8 +9,16 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 public class TestHsvPipeline extends OpenCvPipeline {
 
-    public Scalar low = new Scalar(0, 0, 0);
-    public Scalar high = new Scalar(255, 255, 255);
+    public static double LOW_H = 100;
+    public static double HIGH_H = 130;
+    public static double LOW_S = 50;
+    public static double HIGH_S = 255;
+    public static double LOW_V = 50;
+    public static double HIGH_V = 255;
+
+    public Scalar low = new Scalar(LOW_H, LOW_S, LOW_V);
+    public Scalar high = new Scalar(HIGH_H, HIGH_S, HIGH_V);
+
 
     Mat hsv = new Mat();
     Mat mask = new Mat();

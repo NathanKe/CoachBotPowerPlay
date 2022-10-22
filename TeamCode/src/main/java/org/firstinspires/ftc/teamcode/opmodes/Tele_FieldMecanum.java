@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.ancillary_subsystems.GyroMecanumPlatform;
 
-@TeleOp(name = "Tele_FieldMecanum", group = "")
+@TeleOp
 public class Tele_FieldMecanum extends OpMode {
     public static GyroMecanumPlatform mecBot;
 
@@ -16,6 +16,8 @@ public class Tele_FieldMecanum extends OpMode {
 
     @Override
     public void loop(){
+        telemetry.addData("asdfafd", "qwerqwerqw");
+        telemetry.update();
         mecBot.fieldDriveTrainGamepad(gamepad1);
     }
 
