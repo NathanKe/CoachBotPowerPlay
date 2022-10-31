@@ -21,17 +21,39 @@ public class OmniDriveTrain {
         motorBL = hw.get(DcMotor.class, "motorBL");
     }
 
-    public void drive(Gamepad gamepad){
-        double y = -1 * gamepad.left_stick_y;
-        double x = gamepad.left_stick_x;
-        double t = gamepad.right_stick_x;
+    public void basic_drive(double y, double x, double t){
+        scale_drive(x, y, t, 1.0);
+    }
 
-        double scaleFactor = Math.max(1, Math.abs(y)+Math.abs(x) + Math.abs(t));
+    // 0.0 <= full_slow_percent < standard_percent < max_power_percent <= 1.0
+    // if both triggers, default to standard drive
+    public void slow_and_turbo_trigger_drive(double y, double x, double t, double l_tr, double r_tr, double full_slow_percent, double standard_percent, double max_power_percent){
 
-        double powerFrontRight = (-y+x+t)/scaleFactor;
-        double powerFrontLeft = (y+x+t)/scaleFactor;
-        double powerBackRight = (-y-x+t)/scaleFactor;
-        double powerBackLeft = (y-x+t)/scaleFactor;
+        double left_trigger_slope = full_slow_percent - standard_percent;
+        double low_scale = left_trigger_slope * l_tr + standard_percent;
+
+        double right_trigger_slope = max_power_percent - standard_percent;
+        double high_scale = right_trigger_slope * r_tr + standard_percent;
+
+        if(l_tr > 0.0 && r_tr > 0.0){
+            scale_drive(y, x, t, standard_percent);
+        }else if(right_trigger_slope > 0.0){
+            scale_drive(y, x, t, high_scale);
+        }else if(l_tr > 0.0){
+            scale_drive(y, x, t, low_scale);
+        }else{
+            scale_drive(y, x, t, standard_percent);
+        }
+    }
+
+    public void scale_drive(double y, double x, double t, double scale_factor){
+
+        double in_bounds_factor = Math.max(1, Math.abs(y)+Math.abs(x) + Math.abs(t));
+
+        double powerFrontRight = scale_factor*(-y+x+t)/in_bounds_factor;
+        double powerFrontLeft = scale_factor*(y+x+t)/in_bounds_factor;
+        double powerBackRight = scale_factor*(-y-x+t)/in_bounds_factor;
+        double powerBackLeft = scale_factor*(y-x+t)/in_bounds_factor;
 
         motorFR.setPower(powerFrontRight);
         motorFL.setPower(powerFrontLeft);
