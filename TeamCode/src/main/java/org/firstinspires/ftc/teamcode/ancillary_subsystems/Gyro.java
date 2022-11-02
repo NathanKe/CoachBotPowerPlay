@@ -12,7 +12,7 @@ public class Gyro {
 
     private BNO055IMU imu;
 
-    Gyro(Telemetry in_telemetry, HardwareMap in_hwMap) {
+    public Gyro(Telemetry in_telemetry, HardwareMap in_hwMap) {
         this.initialize(in_hwMap);
     }
 
@@ -23,7 +23,7 @@ public class Gyro {
         imu.initialize(parameters);
     }
 
-    double getYaw(AngleUnit degreeOrRadian) {
+    public double getYaw(AngleUnit degreeOrRadian) {
         return -1 * imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, degreeOrRadian).thirdAngle;
     }
 }

@@ -3,28 +3,38 @@ package org.firstinspires.ftc.teamcode.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.ancillary_subsystems.GyroOmniDriveTrain;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.ancillary_subsystems.Gyro;
 import org.firstinspires.ftc.teamcode.ancillary_subsystems.OmniDriveTrain;
+import org.firstinspires.ftc.teamcode.ancillary_subsystems.OmniHolonomicCalculation;
 
 @TeleOp(name = "Tele_OmniDriveTrain", group = "")
 public class Tele_OmniDriveTrain extends OpMode {
-    private GyroOmniDriveTrain gyroOmni;
+    private OmniDriveTrain omni;
+    private OmniHolonomicCalculation calc;
+    private Gyro gyro;
     @Override
     public void init() {
-        gyroOmni = new GyroOmniDriveTrain(telemetry, hardwareMap);
+        omni = new OmniDriveTrain(hardwareMap);
+        calc = new OmniHolonomicCalculation(0.25, 0.75, 1.0);
+        gyro = new Gyro(telemetry, hardwareMap);
     }
 
     @Override
     public void loop() {
-        gyroOmni.yaw_corrected_slow_and_turbo_drive(
-                gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x,
-                gamepad1.left_trigger, gamepad1.right_trigger,
-                0.25, 0.7, 1.0
-        );
+
+        double yaw_err = gyro.getYaw(AngleUnit.RADIANS);
+
+        calc.reCalcPower(gamepad1, yaw_err);
+
+        omni.calculationDrive(calc);
+
+        telemetry.addData("Heading: ", Math.round(yaw_err * 180 / Math.PI));
+        telemetry.update();
     }
 
     @Override
     public void stop(){
-        gyroOmni.omni.stop();
+        omni.stopAll();
     }
 }
