@@ -11,9 +11,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 public class Gyro {
 
     private BNO055IMU imu;
+    public Telemetry telemetry;
 
     public Gyro(Telemetry in_telemetry, HardwareMap in_hwMap) {
         this.initialize(in_hwMap);
+        telemetry = in_telemetry;
     }
 
     void initialize(HardwareMap in_hwMap) {
@@ -24,6 +26,8 @@ public class Gyro {
     }
 
     public double getYaw(AngleUnit degreeOrRadian) {
-        return -1 * imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, degreeOrRadian).thirdAngle;
+        double yaw = -1 * imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, degreeOrRadian).thirdAngle;
+        telemetry.addData("Yaw", Math.round(yaw * 180 / Math.PI));
+        return yaw;
     }
 }

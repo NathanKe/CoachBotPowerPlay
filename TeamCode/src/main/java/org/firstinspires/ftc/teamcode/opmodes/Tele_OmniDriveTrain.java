@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.ancillary_subsystems.Gyro;
 import org.firstinspires.ftc.teamcode.ancillary_subsystems.OmniDriveTrain;
@@ -15,8 +16,8 @@ public class Tele_OmniDriveTrain extends OpMode {
     private Gyro gyro;
     @Override
     public void init() {
-        omni = new OmniDriveTrain(hardwareMap);
-        calc = new OmniHolonomicCalculation(0.25, 0.75, 1.0);
+        omni = new OmniDriveTrain(telemetry, hardwareMap);
+        calc = new OmniHolonomicCalculation(telemetry,0.25, 0.75, 1.0);
         gyro = new Gyro(telemetry, hardwareMap);
     }
 
@@ -29,7 +30,6 @@ public class Tele_OmniDriveTrain extends OpMode {
 
         omni.calculationDrive(calc);
 
-        telemetry.addData("Heading: ", Math.round(yaw_err * 180 / Math.PI));
         telemetry.update();
     }
 

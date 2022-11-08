@@ -3,13 +3,18 @@ package org.firstinspires.ftc.teamcode.ancillary_subsystems;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 public class OmniDriveTrain {
     private DcMotor motorFL;
     private DcMotor motorFR;
     private DcMotor motorBL;
     private DcMotor motorBR;
 
-    public OmniDriveTrain(HardwareMap hw) {
+    private Telemetry telemetry;
+
+    public OmniDriveTrain(Telemetry in_telemetry, HardwareMap hw) {
+        telemetry = in_telemetry;
         initialize(hw);
     }
 
